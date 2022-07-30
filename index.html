@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="app.js" type="module"></script>
+    <title>Document</title>
+    <style>
+      .table {
+        font-family: "Fira Sans", sans-serif;
+        border-collapse: collapse;
+        border-color: white;
+        background-color: black;
+        color: white;
+      }
+
+      .table th {
+        text-align: left;
+        border-top: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+      }
+      .table td {
+        border-top: 1px solid white;
+      }
+
+      .table td,
+      .search-input {
+        font-size: 1em;
+        padding: 0.6em 1em;
+      }
+
+      .search-input {
+        border: none;
+        outline: none;
+        font-family: "Fira Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <input type="text" class="search-input" placeholder="Date" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="City" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="State" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="Country" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="Shape" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="Duration" />
+          </th>
+          <th>
+            <input type="text" class="search-input" placeholder="Comments" />
+          </th>
+        </tr>
+      </thead>
+      <tbody id="myTable"></tbody>
+    </table>
+    <script src="data.js"></script>
+    <script>
+      // buildTable(data);
+      // function buildTable(data) {}
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".search-input").forEach((inputField) => {
+          const tableRows = inputField
+            .closest("table")
+            .querySelectorAll("tbody > tr");
+          const headerCell = inputField.closest("th");
+          const otherHeaderCells = headerCell.closest("tr").children;
+          const columnIndex = Array.from(otherHeaderCells).indexOf(headerCell);
+          const searchableCells = Array.from(tableRows).map(
+            (row) => row.querySelectorAll("td")[columnIndex]
+          );
+
+          inputField.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+              const searchQuery = inputField.value.toLowerCase();
+
+              for (const tableCell of searchableCells) {
+                const row = tableCell.closest("tr");
+                const value = tableCell.textContent
+                  .toLowerCase()
+                  .replace(",", "");
+
+                row.style.visibility = null;
+
+                if (value.search(searchQuery) === -1) {
+                  row.style.visibility = "collapse";
+                }
+              }
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

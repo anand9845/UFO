@@ -15,7 +15,6 @@ If You Input in only 1 Input Filed than you get data relevant to that field only
 Else IF You search for all fields than you get data relevant to filter
 ![img2](https://user-images.githubusercontent.com/98327889/181994969-09330d67-baa9-449c-b4dc-da5abb6766e7.png)
 
-
 Summary:
 The Drawback of design is that we get the filters only when we press enter button
 
